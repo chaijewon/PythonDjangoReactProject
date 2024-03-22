@@ -33,5 +33,10 @@ from web import views,food_views,recipe_views
 urlpatterns=[
    path('',views.main_page),
    path('food/list/',food_views.food_list),
-   path('food/find/',food_views.food_find)
+   path('food/find/',food_views.food_find),
+   path('recipe/list/',recipe_views.recipe_list_view),
+   path('recipe/list_vue/',recipe_views.recipe_list),
+   path('recipe/find/',recipe_views.recipe_find_view),
+   path('recipe/find_vue/',recipe_views.recipe_find),
+   path('recipe/chef/',recipe_views.recipe_chef_view)
 ]

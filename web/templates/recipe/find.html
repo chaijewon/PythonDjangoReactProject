@@ -1,0 +1,101 @@
+{% extends 'main/main.html' %}
+{% block content %}
+<div class="wrapper row3" id="app">
+  <main class="container clear">
+    <!-- main body -->
+    <!-- ################################################################################################ -->
+    <div class="content">
+      <!-- ################################################################################################ -->
+      <div id="gallery">
+        <figure>
+          <header class="heading inline">
+              <input type="text" size="20" class="input-sm" v-model="fd">
+              <button class="btn-primary btn-sm" @click="find()">검색</button>
+          </header>
+          <ul class="nospace clear">
+              <li v-for="recipe,index in recipe_list" :class="index%4==0?'one_quarter first':'one_quarter'"><a href="#"><img :src="recipe.poster" :title="recipe.title"></a></li>
+          </ul>
+          <figcaption></figcaption>
+        </figure>
+      </div>
+      <!-- ################################################################################################ -->
+      <!-- ################################################################################################ -->
+      <nav class="pagination">
+        <ul>
+          <li v-if="startPage>1"><a class="link" @click="prev()">&laquo; Previous</a></li>
+          <li v-for="i in range(startPage,endPage)" :class="i===curpage?'current':''"><a class="link" @click="pageChange(i)">[[i]]</a></li>
+          <li v-if="endPage<totalpage"><a class="link" @click="next()">Next &raquo;</a></li>
+        </ul>
+      </nav>
+      <!-- ################################################################################################ -->
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- / main body -->
+    <div class="clear"></div>
+  </main>
+</div>
+
+<script>
+    let recipeApp=Vue.createApp({
+       delimiters:['[[',']]'],
+       data(){
+          return {
+             recipe_list:[],
+             curpage:1,
+             startPage:0,
+             endPage:0,
+             totalpage:0,
+             fd:'감자'
+          }
+       },
+       mounted(){
+          this.recipe_change()
+       },
+       methods:{
+          // 공통으로 사용하는 함수 => 반복 제거 => 공통 모듈 (여러개 기능 = 클래스,한개 기능: 메소드)
+          recipe_change(){
+            axios.get('http://localhost:8000/web/recipe/find_vue/',{
+               params:{
+                 page:this.curpage,
+                 fd:this.fd
+               }
+            }).then(res=>{
+              console.log(res.data)
+              this.recipe_list=res.data.recipe_list
+              this.curpage=res.data.curpage
+              this.totalpage=res.data.totalpage
+              this.startPage=res.data.startPage
+              this.endPage=res.data.endPage
+            })
+          },
+          range(start,end){
+             let arr=[]
+             let lang=end-start
+             for(let i=0;i<=lang;i++)
+             {
+                arr[i]=start
+                start++
+             }
+             console.log(arr)
+             return arr
+          },
+          prev(){
+             this.curpage=this.startPage-1
+             this.recipe_change()
+          },
+          next(){
+             this.curpage=this.endPage+1
+             this.recipe_change()
+          },
+          pageChange(page){
+             this.curpage=page
+             this.recipe_change()
+          },
+          find(){
+             this.curpage=1
+             this.recipe_change()
+          }
+        }
+    }).mount("#app")
+</script>
+{% endblock %}

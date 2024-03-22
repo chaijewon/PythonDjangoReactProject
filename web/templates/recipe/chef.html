@@ -1,0 +1,28 @@
+{% extends 'main/main.html' %}
+{% block content %}
+<div class="wrapper row3" id="app">
+  <main class="container clear">
+      <h2 class="sectiontitle">쉐프 목록</h2>
+
+  </main>
+</div>
+<script>
+    let chefApp=Vue.createApp({
+        delimiters:['[[',']]'],
+        data(){
+           return {
+             chef_list:[],
+             curpage:1,
+             totalpage:0
+           }
+        },
+        mounted(){
+        },
+        methods:{
+           dataRecv(){
+
+           }
+        }
+    }).mount("#app")
+</script>
+{% endblock %}

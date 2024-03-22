@@ -3,9 +3,17 @@
 <head>
     {% load static %}
 <title>Gravity</title>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="/static/layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<script src="https://unpkg.com/vue@3"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <style type="text/css">
+    a.link:hover{
+       cursor:pointer
+    }
+  </style>
 </head>
 <body id="top">
 <div class="wrapper row1">
@@ -27,9 +35,9 @@
       </li>
       <li><a class="drop" href="#">레시피</a>
         <ul>
-          <li><a href="pages/gallery.html">레시피</a></li>
-          <li><a href="pages/full-width.html">쉐프</a></li>
-          <li><a href="pages/full-width.html">레시피 검색</a></li>
+          <li><a href="/web/recipe/list/">레시피</a></li>
+          <li><a href="/web/recipe/chef/">쉐프</a></li>
+          <li><a href="/web/recipe/find/">레시피 검색</a></li>
         </ul>
       </li>
       <li><a class="drop" href="#">스토어</a>
