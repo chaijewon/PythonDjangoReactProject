@@ -118,4 +118,36 @@ def foodFindCount(address):
          print(e)
     return total[0] #()
 
+"""
+  FNO                                       NOT NULL NUMBER
+ POSTER                                    NOT NULL VARCHAR2(1000)
+ NAME                                      NOT NULL VARCHAR2(300)
+ TYPE                                      NOT NULL VARCHAR2(100)
+ ADDRESS                                   NOT NULL VARCHAR2(500)
+ PHONE                                     NOT NULL VARCHAR2(100)
+ SCORE                                              NUMBER(2,1)
+ THEME                                     NOT NULL VARCHAR2(4000)
+ PRICE                                              VARCHAR2(100)
+ TIME                                               VARCHAR2(200)
+ SEAT                                               VARCHAR2(100)
+ CONTENT                                            CLOB
+ LINK                                               VARCHAR2(300)
+ HIT                                                NUMBER
+ JJIMCOUNT                                          NUMBER
+ LIKECOUNT                                          NUMBER
+"""
+def foodDetailData(fno):
+    conn=models.getConnection()
+    cursor=conn.cursor()
+    sql=f"""
+               SELECT 'http://www.menupan.com'||poster,name,type,address,phone,score,theme,price,time,seat
+               FROM food_menu_house
+               WHERE fno={fno}
+        """
+    cursor.execute(sql)
+    food_detail=cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return food_detail
+
 

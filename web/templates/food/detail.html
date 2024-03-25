@@ -1,0 +1,46 @@
+{% extends 'main/main.html' %}
+{% block content %}
+<div class="wrapper row3">
+  <main class="container clear">
+      <table class="table">
+          <tr>
+              <td class="text-center" width="30%" rowspan="8">
+                  <img src="{{fd.poster}}" style="width:300px;height:300px">
+              </td>
+              <td colspan="2">
+                  <h3>{{fd.name}}&nbsp;<span style="color:orange">{{fd.score}}</span></h3>
+              </td>
+          </tr>
+          <tr>
+              <td width="15%" class="text-center">주소</td>
+              <td width="55%">{{fd.address}}</td>
+          </tr>
+          <tr>
+              <td width="15%" class="text-center">전화</td>
+              <td width="55%">{{fd.phone}}</td>
+          </tr>
+          <tr>
+              <td width="15%" class="text-center">음식종류</td>
+              <td width="55%">{{fd.type}}</td>
+          </tr>
+          <tr>
+              <td width="15%" class="text-center">가격대</td>
+              <td width="55%">{{fd.price}}</td>
+          </tr>
+          <tr>
+              <td width="15%" class="text-center">영업시간</td>
+              <td width="55%">{{fd.time}}</td>
+          </tr>
+          <tr>
+              <td width="15%" class="text-center">좌석</td>
+              <td width="55%">{{fd.seat}}</td>
+          </tr>
+          <tr>
+              <td colspan="2" class="text-right">
+                  <a href="javascript:history.back()" class="btn btn-sm btn-primary">목록</a>
+              </td>
+          </tr>
+      </table>
+  </main>
+</div>
+{% endblock %}

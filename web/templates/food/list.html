@@ -12,9 +12,9 @@
           <ul class="nospace clear">
             {% for food in food_list %}
              {% if forloop.counter0|divisibleby:4 %}
-              <li class="one_quarter first"><a href="#"><img src="http://www.menupan.com{{food.poster}}" title="{{food.name}}"></a></li>
+              <li class="one_quarter first"><a href="/web/food/food_detail/?fno={{food.fno}}"><img src="http://www.menupan.com{{food.poster}}" title="{{food.name}}"></a></li>
               {% else %}
-              <li class="one_quarter"><a href="#"><img src="http://www.menupan.com{{food.poster}}" title="{{food.name}}"></a></li>
+              <li class="one_quarter"><a href="/web/food/food_detail/?fno={{food.fno}}"><img src="http://www.menupan.com{{food.poster}}" title="{{food.name}}"></a></li>
               {% endif %}
             {% endfor %}
           </ul>

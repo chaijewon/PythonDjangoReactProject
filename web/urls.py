@@ -38,5 +38,7 @@ urlpatterns=[
    path('recipe/list_vue/',recipe_views.recipe_list),
    path('recipe/find/',recipe_views.recipe_find_view),
    path('recipe/find_vue/',recipe_views.recipe_find),
-   path('recipe/chef/',recipe_views.recipe_chef_view)
+   path('recipe/chef/',recipe_views.recipe_chef_view),
+   path('recipe/chef_vue/',recipe_views.recipe_chef),
+   path('food/food_detail/',food_views.food_detail)
 ]

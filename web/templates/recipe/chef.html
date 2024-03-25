@@ -3,7 +3,45 @@
 <div class="wrapper row3" id="app">
   <main class="container clear">
       <h2 class="sectiontitle">쉐프 목록</h2>
+      <table class="table">
+          <tr>
+              <td>
+                  <table class="table" v-for="vo in chef_list">
+                      <tbody>
+                       <tr>
+                          <td width="20%" rowspan="2" class="text-center">
+                            <a :href="'http://localhost:8000/web/recipe/chef_detail/cno='+vo.cno">
+                              <img :src="vo.poster" class="img-circle" style="width:100px;height:100px">
+                            </a>
+                          </td>
+                          <td colspan="4">
+                            <a :href="'http://localhost:8000/web/recipe/chef_detail/cno='+vo.cno">
+                              <h3 style="color:orange">[[vo.chef]]</h3>
+                            </a>
+                          </td>
+                       </tr>
+                      <tr>
+                          <td class="text-center"><img src="/static/icon/m1.png">&nbsp;[[vo.mem_cont1.toLocaleString()]]</td>
+                          <td class="text-center"><img src="/static/icon/m2.png">&nbsp;[[vo.mem_cont2.toLocaleString()]]</td>
+                          <td class="text-center"><img src="/static/icon/m3.png">&nbsp;[[vo.mem_cont7.toLocaleString()]]</td>
+                          <td class="text-center"><img src="/static/icon/m4.png">&nbsp;[[vo.mem_cont3.toLocaleString()]]</td>
+                      </tr>
+                      </tbody>
 
+                  </table>
+              </td>
+          </tr>
+      </table>
+      <div style="height:20px"></div>
+      <table class="table">
+          <tr>
+              <td class="text-center inline">
+                  <button class="btn-sm btn-danger" @click="prev()">이전</button>
+                  [[curpage]] page / [[totalpage]] pages
+                  <button class="btn-sm btn-danger" @click="next()">다음</button>
+              </td>
+          </tr>
+      </table>
   </main>
 </div>
 <script>
@@ -17,10 +55,29 @@
            }
         },
         mounted(){
+           // window.onload => $(function(){}) , useEffect()=> []
+           this.dataRecv()
         },
         methods:{
+           prev(){
+              this.curpage=this.curpage>1?this.curpage-1:this.curpage
+              this.dataRecv()
+           },
+           next(){
+              this.curpage=this.curpage<this.totalpage?this.curpage+1:this.curpage
+              this.dataRecv()
+           },
            dataRecv(){
-
+              axios.get('http://localhost:8000/web/recipe/chef_vue/',{
+                   params:{
+                      page:this.curpage
+                   }
+              }).then(res=>{
+                  console.log(res.data)
+                  this.chef_list=res.data.chef_list
+                  this.curpage=res.data.curpage
+                  this.totalpage=res.data.totalpage
+              })
            }
         }
     }).mount("#app")

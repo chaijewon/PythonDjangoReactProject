@@ -72,3 +72,26 @@ def food_find(request):
     }
     return render(request, "food/find.html", food_data)
 
+def food_detail(request):
+    fno=request.GET['fno']
+    # 데이터베이스 연동
+    fd=food_models.foodDetailData(int(fno))
+    print(fd)
+    # => list(fd) []
+    #=> Tuple (값,값.......)
+    # 'http://www.menupan.com'||poster,name,type,address,phone,score,theme,price,time,seat
+    f_detail={
+             "poster":fd[0],
+             "name":fd[1],
+             "type":fd[2],
+             "address":fd[3],
+             "phone":fd[4],
+             "score":float(fd[5]),
+             "theme":fd[6],
+             "price":fd[7],
+             "time":fd[8],
+             "seat":fd[9]
+         }
+    return render(request,"food/detail.html",{"fd":f_detail})
+
+
