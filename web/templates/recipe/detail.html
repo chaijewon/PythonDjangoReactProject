@@ -1,0 +1,53 @@
+{% extends 'main/main.html' %}
+{% block content %}
+<div class="wrapper row3" id="app">
+  <main class="container clear">
+      <table class="table">
+          <tr>
+              <td class="text-center" colspan="3">
+                  <img :src="detail.poster" style="width:600px;height:200px">
+              </td>
+          </tr>
+          <tr>
+              <td class="text-center" colspan="3">
+                  [[detail.title]]
+              </td>
+          </tr>
+          <tr>
+              <td class="text-center" colspan="3">
+                  [[detail.content]]
+              </td>
+          </tr>
+          <tr>
+              <td class="text-center">[[detail.info1]]</td>
+              <td class="text-center">[[detail.info2]]</td>
+              <td class="text-center">[[detail.info3]]</td>
+          </tr>
+      </table>
+  </main>
+</div>
+<script>
+    let detailApp=Vue.createApp({
+       delimiters:['[[',']]'],
+       data(){
+         return {
+            no:{{no}},
+            detail:{},
+            posters:[],
+            make:[],
+            stuff:[]
+         }
+       },
+       mounted(){
+         axios.get('http://localhost:8000/web/recipe/detail_vue/',{
+           params:{
+              no:this.no
+           }
+         }).then(res=>{
+            console.log(res.data)
+            this.detail=res.data.detail
+         })
+       }
+    }).mount("#app")
+</script>
+{% endblock %}

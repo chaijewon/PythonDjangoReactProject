@@ -10,7 +10,7 @@
         <figure>
           <header class="heading">레시피 목록</header>
           <ul class="nospace clear">
-              <li v-for="recipe,index in recipe_list" :class="index%4==0?'one_quarter first':'one_quarter'"><a href="#"><img :src="recipe.poster" :title="recipe.title"></a></li>
+              <li v-for="recipe,index in recipe_list" :class="index%4==0?'one_quarter first':'one_quarter'"><a :href="'http://localhost:8000/web/recipe/detail/?no='+recipe.no"><img :src="recipe.poster" :title="recipe.title"></a></li>
           </ul>
           <figcaption></figcaption>
         </figure>
@@ -49,6 +49,7 @@
        },
        methods:{
           // 공통으로 사용하는 함수 => 반복 제거 => 공통 모듈 (여러개 기능 = 클래스,한개 기능: 메소드)
+
           recipe_change(){
             axios.get('http://localhost:8000/web/recipe/list_vue/',{
                params:{

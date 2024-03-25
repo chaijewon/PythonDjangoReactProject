@@ -126,6 +126,61 @@ def recipe_chef(request):
     }
     return JsonResponse(chef_data)
 
+"""
+     POSTER                                    NOT NULL VARCHAR2(300)
+     TITLE                                     NOT NULL VARCHAR2(1000)
+     CHEF                                      NOT NULL VARCHAR2(200)
+     CHEF_POSTER                                        VARCHAR2(300)
+     CHEF_PROFILE                                       VARCHAR2(1000)
+     INFO1                                              VARCHAR2(100)
+     INFO2                                              VARCHAR2(100)
+     INFO3                                              VARCHAR2(100)
+     CONTENT                                            VARCHAR2(4000)
+     FOODMAKE                                            CLOB
+     STUFF                                              CLOB
+"""
+def recipeDetailView(request):
+    no=request.GET['no']
+    return render(request,"recipe/detail.html",{"no":no})
+def recipeDetail(request):
+    no=request.GET['no']
+    rd,rfood,rstuff=recipe_models.recipe_detail(int(no))
+    re_detail={
+        "no":int(rd[0]),
+        "poster":rd[1],
+        "title":rd[2],
+        "chef":rd[3],
+        "chef_poster":rd[4],
+        "chef_profile":rd[5],
+        "info1":rd[6],
+        "info2":rd[7],
+        "info3":rd[8],
+        "content":rd[9]
+    }
+
+    stuff=rstuff.split(",")
+    rdata=rfood.split("\n")
+    posters=[]
+    make=[]
+
+    for data in range(len(rdata)-1):
+        temp=rdata[data].split("^")
+        make.append(temp[0])
+        posters.append(temp[1])
+
+    detail={
+        "detail":re_detail,
+        "posters":posters,
+        "make":make,
+        "stuff":stuff
+    }
+    print(re_detail)
+    print(posters)
+    print(make)
+    print(stuff)
+    return JsonResponse(detail)
+
+
 
 
 

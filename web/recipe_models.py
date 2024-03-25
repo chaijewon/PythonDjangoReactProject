@@ -2,6 +2,8 @@ from django.db import models
 #VueJS
 import oracledb
 from web import models
+import pandas as pd
+import os
 def recipeListData(page):
     try:
          conn=models.getConnection()
@@ -137,3 +139,38 @@ def recipeChefTotalPage():
     except Exception as e:
          print(e)
     return total[0]
+
+# models => DAO ,  views => Controller / RestController
+"""
+     NO                                                 NUMBER
+     POSTER                                    NOT NULL VARCHAR2(300)
+     TITLE                                     NOT NULL VARCHAR2(1000)
+     CHEF                                      NOT NULL VARCHAR2(200)
+     CHEF_POSTER                                        VARCHAR2(300)
+     CHEF_PROFILE                                       VARCHAR2(1000)
+     INFO1                                              VARCHAR2(100)
+     INFO2                                              VARCHAR2(100)
+     INFO3                                              VARCHAR2(100)
+     CONTENT                                            VARCHAR2(4000)
+     FOODMAKE                                            CLOB
+     STUFF                                              CLOB
+"""
+
+# DBMS_LOB_SUBSTR(foodmake,4000,1)
+def recipe_detail(no):
+    conn=models.getConnection()
+    cursor=conn.cursor()
+    sql=f"""
+          SELECT no,poster,title,chef,chef_poster,chef_profile,
+                 info1,info2,info3,content,foodmake,stuff 
+          FROM recipedetail 
+          WHERE no={no}
+        """
+    cursor.execute(sql)
+    recipe_detail=cursor.fetchone()
+    rfood = ''.join(recipe_detail[-2].read())
+    stuff=''.join(recipe_detail[-1].read())
+    cursor.close()
+    conn.close()
+
+    return recipe_detail,rfood,stuff
