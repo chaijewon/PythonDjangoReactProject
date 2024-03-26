@@ -40,7 +40,8 @@ def recipe_list(request):
     for recipe in recipeList:
         rdata={"no":recipe[0],"title":recipe[1],"poster":recipe[2],"chef":recipe[2]}
         rd.append(rdata)
-
+    recipe_count=recipe_models.recipeRowCount()
+    """
     recip_data={
         "recipe_list":rd,
         "curpage":int(curpage),
@@ -48,8 +49,14 @@ def recipe_list(request):
         "startPage":int(startPage),
         "endPage":int(endPage)
     }
+    """
+    recipe_data={
+        "recipe_list": rd,
+        "curpage": int(curpage),
+        "count":int(recipe_count)
+    }
 
-    return JsonResponse(recip_data)
+    return JsonResponse(recipe_data)
 
 def recipe_find_view(request):
     return render(request,"recipe/find.html")
@@ -119,10 +126,18 @@ def recipe_chef(request):
                  }
         cd.append(rdata)
 
+    chef_count=recipe_models.recipeChefRowCount()
+    """
     chef_data = {
         "chef_list": cd,
         "curpage": int(curpage),
         "totalpage": int(totalpage)
+    }
+    """
+    chef_data = {
+        "chef_list": cd,
+        "curpage": int(curpage),
+        "count": int(chef_count)
     }
     return JsonResponse(chef_data)
 

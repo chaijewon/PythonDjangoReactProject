@@ -22,7 +22,7 @@ def food_list(request):
     for f in food_list:
         fdata = {"fno": f[0], "name": f[1], "poster": f[2]}
         fl.append(fdata)
-
+    """
     food_data={
              "food_list":fl,
              "curpage":int(curpage),
@@ -32,8 +32,14 @@ def food_list(request):
              "count":int(count),
              "range":range(int(startPage),int(endPage))
     }
-    return render(request,"food/list.html",food_data)
-    #return JsonResponse(food_data)
+    """
+    food_data = {
+        "food_list": fl,
+        "curpage": int(curpage),
+        "count": int(count)
+    }
+    #return render(request,"food/list.html",food_data)
+    return JsonResponse(food_data)
 
 def food_find(request):
     try:

@@ -24,6 +24,51 @@
               <td class="text-center">[[detail.info3]]</td>
           </tr>
       </table>
+      <table class="table">
+          <caption><h3>재료</h3></caption>
+          <tbody>
+            <tr>
+                <td>
+                    <ul>
+                     <li v-for="s in stuff">[[s]]</li>
+                    </ul>
+                </td>
+            </tr>
+          </tbody>
+      </table>
+      <table class="table">
+          <caption><h3>레시피 제작법</h3></caption>
+          <tr>
+              <td>
+                  <table class="table" v-for="re,index in make">
+                      <tr>
+                          <td class="text-left">[[re]]</td>
+                          <td class="text-right">
+                              <img :src="posters[index]" style="width:130px;height:100px">
+                          </td>
+                      </tr>
+                  </table>
+              </td>
+          </tr>
+      </table>
+      <table class="table">
+        <tr>
+           <td width="20%" rowspan="2">
+               <img :src="detail.chef_poster" style="width:100px;height:100px">
+           </td>
+           <td width="80%">
+               [[detail.chef]]
+           </td>
+        </tr>
+        <tr>
+            <td width="80%">[[detail.chef_profile]]</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-right">
+                <a href="javascript:history.back()" class="btn btn-sm btn-danger">목록</a>
+            </td>
+        </tr>
+      </table>
   </main>
 </div>
 <script>
@@ -46,6 +91,9 @@
          }).then(res=>{
             console.log(res.data)
             this.detail=res.data.detail
+            this.posters=res.data.posters
+            this.make=res.data.make
+            this.stuff=res.data.stuff
          })
        }
     }).mount("#app")

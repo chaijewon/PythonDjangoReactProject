@@ -30,6 +30,20 @@ def recipeListData(page):
     #지역변수의 scope가 명확하지 않는다  (var => let)
     return recipe_list
 
+def recipeRowCount():
+    conn=models.getConnection()
+    cursor=conn.cursor()
+    sql="""
+          SELECT COUNT(*) FROM recipe
+          WHERE no IN(SELECT no FROM recipe
+                   INTERSECT SELECT no FROM recipeDetail)
+          ORDER BY no ASC 
+        """
+    cursor.execute(sql)
+    count=cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return count[0]
 def recipeTotalPage():
     try:
           conn=models.getConnection()
@@ -125,6 +139,20 @@ def recipeChefList(page):
          print(e)
     return chef_list
 
+def recipeChefRowCount():
+    try:
+         conn=models.getConnection()
+         cursor=conn.cursor()
+         sql="""
+             SELECT COUNT(*) FROM chef 
+             """
+         cursor.execute(sql)
+         total=cursor.fetchone()
+         cursor.close()
+         conn.close()
+    except Exception as e:
+         print(e)
+    return total[0]
 def recipeChefTotalPage():
     try:
          conn=models.getConnection()
@@ -168,6 +196,7 @@ def recipe_detail(no):
         """
     cursor.execute(sql)
     recipe_detail=cursor.fetchone()
+    #CLOB처리
     rfood = ''.join(recipe_detail[-2].read())
     stuff=''.join(recipe_detail[-1].read())
     cursor.close()
