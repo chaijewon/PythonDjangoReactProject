@@ -67,9 +67,9 @@ def foodFindData(page,address):
          end=rowSize*page
 
          sql=f"""
-               SELECT fno,name,poster,num
-               FROM (SELECT fno,name,poster,rownum as num
-               FROM (SELECT fno,name,poster 
+               SELECT fno,name,poster,address,num
+               FROM (SELECT fno,name,poster,address,rownum as num
+               FROM (SELECT fno,name,poster,address
                FROM food_menu_house
                WHERE address LIKE '%'||'{address}'||'%' 
                ORDER BY fno ASC))

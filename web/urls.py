@@ -28,7 +28,7 @@
     => import java.util.Scanner
 """
 from django.urls import path
-from web import views,food_views,recipe_views
+from web import views,food_views,recipe_views,goods_views
 # localhost:8000
 urlpatterns=[
    path('',views.main_page),
@@ -42,5 +42,6 @@ urlpatterns=[
    path('recipe/chef_vue/',recipe_views.recipe_chef),
    path('food/food_detail/',food_views.food_detail),
    path('recipe/detail/',recipe_views.recipeDetailView),
-   path('recipe/detail_vue/',recipe_views.recipeDetail)
+   path('recipe/detail_vue/',recipe_views.recipeDetail),
+   path('goods/list/',goods_views.goods_list)
 ]

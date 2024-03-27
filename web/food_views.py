@@ -63,9 +63,9 @@ def food_find(request):
         endPage = totalpage
     fl = []
     for f in food_list:
-        fdata = {"fno": f[0], "name": f[1], "poster": f[2]}
+        fdata = {"fno": f[0], "name": f[1], "poster": f[2],"address":f[3]}
         fl.append(fdata)
-
+    """
     food_data = {
         "food_list": fl,
         "curpage": int(curpage),
@@ -76,7 +76,15 @@ def food_find(request):
         "range": range(int(startPage), int(endPage)),
         "address":address
     }
-    return render(request, "food/find.html", food_data)
+    """
+    food_data = {
+        "food_list": fl,
+        "curpage": int(curpage),
+        "count": int(count),
+        "address": address
+    }
+    #return render(request, "food/find.html", food_data)
+    return JsonResponse(food_data)
 
 def food_detail(request):
     fno=request.GET['fno']
@@ -98,6 +106,7 @@ def food_detail(request):
              "time":fd[8],
              "seat":fd[9]
          }
-    return render(request,"food/detail.html",{"fd":f_detail})
+    #return render(request,"food/detail.html",{"fd":f_detail})
+    return JsonResponse(f_detail)
 
 
