@@ -195,6 +195,35 @@ def recipeDetail(request):
     print(stuff)
     return JsonResponse(detail)
 
+def chef_detail(request):
+    try:
+          page=request.GET.get('page') #GET['page']
+
+    except Exception as e:
+          page="1"
+    cno = request.GET.get('cno')
+    chef=recipe_models.chefGetName(int(cno))
+    chef_list,count=recipe_models.recipeChefDetail(int(page),chef)
+    """
+    no,title,poster,chef,hit
+    """
+    cd=[]
+    for c in chef_list:
+        cdata={
+            "no":c[0],
+            "title":c[1],
+            "poster":c[2],
+            "chef":c[3],
+            "hit":c[4]
+        }
+        cd.append(cdata)
+    chef_data={
+        "cd":cd,
+        "count":count,
+        "curpage":int(page)
+    }
+
+    return JsonResponse(chef_data)
 
 
 

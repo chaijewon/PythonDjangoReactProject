@@ -43,5 +43,6 @@ urlpatterns=[
    path('food/food_detail/',food_views.food_detail),
    path('recipe/detail/',recipe_views.recipeDetailView),
    path('recipe/detail_vue/',recipe_views.recipeDetail),
-   path('goods/list/',goods_views.goods_list)
+   path('goods/list/',goods_views.goods_list),
+   path('recipe/chef_detail/',recipe_views.chef_detail)
 ]

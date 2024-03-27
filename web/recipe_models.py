@@ -167,6 +167,55 @@ def recipeChefTotalPage():
     except Exception as e:
          print(e)
     return total[0]
+"""
+ NO                                        NOT NULL NUMBER
+ TITLE                                     NOT NULL VARCHAR2(2000)
+ POSTER                                    NOT NULL VARCHAR2(500)
+ CHEF                                      NOT NULL VARCHAR2(200)
+ LINK                                      NOT NULL VARCHAR2(300)
+ JJIMCOUNT                                          NUMBER
+ HIT                                                NUMBER
+"""
+
+def chefGetName(cno):
+    conn=models.getConnection()
+    cursor=conn.cursor()
+    sql=f"""
+          SELECT chef FROM chef
+          WHERE cno={cno}
+        """
+    cursor.execute(sql)
+    chef=cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return chef[0]
+def recipeChefDetail(page,chef):
+    conn=models.getConnection()
+    cursor=conn.cursor()
+    rowSize=20
+    start=(rowSize*page)-rowSize
+    end=(rowSize*page)
+    sql=f"""
+           SELECT no,title,poster,chef,hit,num 
+           FROM (SELECT no,title,poster,chef,hit,rownum as num
+           FROM (SELECT no,title,poster,chef,hit
+           FROM recipe WHERE chef='{chef}' ORDER BY no ASC))
+           WHERE num BETWEEN {start} AND {end}
+         """
+    cursor.execute(sql)
+    chef_data=cursor.fetchall()
+    cursor.close()
+
+    sql=f"""
+          SELECT COUNT(*) FROM recipe
+          WHERE chef='{chef}'
+        """
+    cursor=conn.cursor()
+    cursor.execute(sql)
+    count=cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return chef_data,count[0]
 
 # models => DAO ,  views => Controller / RestController
 """
